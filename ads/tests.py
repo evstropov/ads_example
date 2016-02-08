@@ -6,7 +6,7 @@ from .models import Ad
 
 client = Client()
 
-app_namespcae = 'ads'
+app_namespace = 'ads'
 
 
 class AdBaseTest(TestCase):
@@ -25,12 +25,12 @@ class AdBaseTest(TestCase):
 class AdDetailTest(AdBaseTest):
 
     def test_404(self):
-        response = self.client.get(reverse('ads:ad_detail', args=(100,)))
+        response = self.client.get(reverse(app_namespace + ':ad_detail', args=(100,)))
         self.assertEqual(response.status_code, 404)
 
     def test_view(self):
         ad = self.create_ad()
-        response = self.client.get(reverse('ads:ad_detail', args=(ad.pk,)))
+        response = self.client.get(reverse(app_namespace + ':ad_detail', args=(ad.pk,)))
         self.assertEqual(response.status_code, 200)
         self.assertIsInstance(response.context['object'], Ad)
         self.assertEqual(response.context['object'].pk, ad.pk)
